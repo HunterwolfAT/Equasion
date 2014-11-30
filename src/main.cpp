@@ -56,14 +56,12 @@ int main(int argc, const char *argv[])
 
 	// Some Testing stuff so we can see what we are doing
 	RenderComponent PipRender;
-	PipRender.setPosX(10);
-	PipRender.setPosY(10);
 	PipRender.LoadTexture(ren, "../data/hesitating.png");
-	Actor LittlePip(&PipRender);
-	Actor DontRender;
+	Actor LittlePip(10, 10, &PipRender);
+	Actor DontRender;	//Note(hunter): No parenthesis, or g++ will think DontRender is a function
 
 	cout << "LittlePip has PipRender: " << LittlePip.hasRenderComponent() << endl;
-	cout << "DontRender has PipRender: " << DontRender.hasRenderComponent() << endl;
+	//cout << "DontRender has PipRender: " << DontRender.hasRenderComponent() << endl;
 
 	// ============== MAIN LOOP ==========
 	// Main loop flag

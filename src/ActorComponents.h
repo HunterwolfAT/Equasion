@@ -12,14 +12,12 @@ class RenderComponent
 		~RenderComponent();
 		int getPosX();
 		int getPosY();
-		void setPosX(int x);
-		void setPosY(int y);
+		void InitPos(int* x, int* y);
 		void LoadTexture(SDL_Renderer* ren, std::string path);
 		LTexture getTexture();
-		void render(SDL_Renderer *ren);
+		void render(SDL_Renderer *ren, int x, int y);
 	
 	private:
-		int posx, posy;
 		LTexture tex;
 };
 

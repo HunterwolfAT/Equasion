@@ -1,9 +1,13 @@
 #include "Actor.h"
+#include <iostream>
 
 using namespace std;
 
-Actor::Actor(RenderComponent *ren)
+Actor::Actor(int x, int y, RenderComponent *ren)
 {
+	posx = x;
+	posy = y;
+
 	mrender = ren;
 }
 
@@ -19,11 +23,21 @@ RenderComponent* Actor::getRenderComponent()
 	return mrender;
 }
 
+void Actor::setPosX(int x)
+{
+	posx = x;
+}
+
+void Actor::setPosY(int y)
+{
+	posy = y;
+}
+
 void Actor::render(SDL_Renderer* ren)
 {
 	if (mrender != NULL) 
 	{
-		mrender->render(ren);
+		mrender->render(ren, posx, posy );
 	}
 }
 
