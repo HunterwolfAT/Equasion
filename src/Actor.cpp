@@ -3,12 +3,13 @@
 
 using namespace std;
 
-Actor::Actor(int x, int y, RenderComponent *ren)
+Actor::Actor(int x, int y, RenderComponent *ren, InputComponent *input)
 {
 	posx = x;
 	posy = y;
 
 	mrender = ren;
+	minput = input;
 }
 
 bool Actor::hasRenderComponent()
@@ -38,6 +39,15 @@ void Actor::render(SDL_Renderer* ren)
 	if (mrender != NULL) 
 	{
 		mrender->render(ren, posx, posy );
+	}
+}
+
+void Actor::passInput(SDL_Keycode sym)
+{
+	if (minput != NULL)
+	{
+		//printf("Stub!\n");
+		minput->MoveThisActor(sym, &posx, &posy);
 	}
 }
 

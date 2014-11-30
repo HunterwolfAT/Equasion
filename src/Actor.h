@@ -6,12 +6,13 @@
 class Actor
 {
 	public:
-		Actor(int x = 0, int y = 0, RenderComponent *ren = NULL);
+		Actor(int x = 0, int y = 0, RenderComponent *ren = NULL, InputComponent *input = NULL);
 		~Actor();
 		
-		int posx, posy;
+		Uint32 posx, posy;
 
 		void render(SDL_Renderer* ren);
+		void passInput(SDL_Keycode sym);
 
 		bool hasRenderComponent();
 		RenderComponent* getRenderComponent();
@@ -22,6 +23,7 @@ class Actor
 
 	private:
 		RenderComponent *mrender;
+		InputComponent *minput;
 };
 
 #endif

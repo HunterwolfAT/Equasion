@@ -57,7 +57,8 @@ int main(int argc, const char *argv[])
 	// Some Testing stuff so we can see what we are doing
 	RenderComponent PipRender;
 	PipRender.LoadTexture(ren, "../data/hesitating.png");
-	Actor LittlePip(10, 10, &PipRender);
+	InputComponent PipController;
+	Actor LittlePip(10, 10, &PipRender, &PipController);
 	Actor DontRender;	//Note(hunter): No parenthesis, or g++ will think DontRender is a function
 
 	cout << "LittlePip has PipRender: " << LittlePip.hasRenderComponent() << endl;
@@ -78,6 +79,9 @@ int main(int argc, const char *argv[])
 			// User requests quit
 			if ( e.type == SDL_QUIT )
 				quit = true;
+			if ( e.type == SDL_KEYDOWN ) {
+				LittlePip.passInput(e.key.keysym.sym);
+			}
 		}
 
 		// Clear screen

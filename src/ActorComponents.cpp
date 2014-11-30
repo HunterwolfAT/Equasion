@@ -36,13 +36,21 @@ InputComponent::~InputComponent()
 	cout << "Stub!" << endl;
 }
 
-void InputComponent::MoveThisActor(int x, int y)
+void InputComponent::MoveThisActor(SDL_Keycode sym, Uint32 *x, Uint32 *y)
 {
-	/*if(mowner->hasRenderComponent())
-	{
-		RenderComponent *actorRender = mowner->getRenderComponent();
-		actorRender->setPosX(actorRender->getPosX() + x);
-		actorRender->setPosY(actorRender->getPosY() + y);
-	}*/
-	cout << "Stub!" << endl;
+	printf("New Pos: %d - %d\n", *x, *y);
+	switch(sym) {
+	case SDLK_w:
+		*y -= 2;
+		break;
+	case SDLK_s:
+		*y += 2;
+		break;
+	case SDLK_a:
+		*x -= 2;
+		break;
+	case SDLK_d:
+		*x += 2;
+		break;
+	}
 }

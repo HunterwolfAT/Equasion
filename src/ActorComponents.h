@@ -24,11 +24,9 @@ class RenderComponent
 class InputComponent
 {
 	public: 
-		InputComponent(/*Actor *owner*/);
+		InputComponent();
 		~InputComponent();
-		void MoveThisActor(int x, int y);
-	private:
-		//Actor *mowner;
+		void MoveThisActor(SDL_Keycode sym, Uint32 *x, Uint32 *y);
 };
 
 #endif
