@@ -15,6 +15,9 @@ using namespace std;
 SDL_Window *win = NULL;
 SDL_Renderer *ren = NULL;
 
+// Mode to edit the world
+bool EditorMode = true;
+
 int init()
 {
 	// SDL Initialisieren
@@ -71,6 +74,10 @@ int main(int argc, const char *argv[])
 	// Event Handler
 	SDL_Event e;
 
+	// Mouse position variables
+	int mx, my;
+	Actor *ActorToDrag = NULL;
+
 	while( !quit )
 	{
 		// Handle events on queue
@@ -79,8 +86,28 @@ int main(int argc, const char *argv[])
 			// User requests quit
 			if ( e.type == SDL_QUIT )
 				quit = true;
-			if ( e.type == SDL_KEYDOWN ) {
+			if ( e.type == SDL_KEYDOWN ) 
+			{
 				LittlePip.passInput(e.key.keysym.sym);
+			}
+			if ( e.type == SDL_MOUSEMOTION ) {
+				SDL_GetMouseState( &mx, & my );
+				printf("MousePos -  x: %d y: %d\n", mx, my);
+				// Move the selected Actor
+				if (ActorToDrag != NULL) 
+				{
+					ActorToDrag->setPos(mx, my);
+					printf("Moving!\n");
+				}
+			}
+			if ( e.type == SDL_MOUSEBUTTONDOWN ) 
+			{
+				printf("Click!\n");
+				ActorToDrag = &LittlePip;
+			}
+			if ( e.type == SDL_MOUSEBUTTONUP ) 
+			{
+				ActorToDrag = NULL;
 			}
 		}
 

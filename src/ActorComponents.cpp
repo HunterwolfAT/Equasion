@@ -17,9 +17,9 @@ void RenderComponent::LoadTexture(SDL_Renderer* ren, string path)
 	tex.loadFromFile(ren, path);
 }
 
-void RenderComponent::render(SDL_Renderer *ren, int x, int y)
+void RenderComponent::render(SDL_Renderer *ren, SDL_Rect *BBox)
 {
-		tex.render(ren, x, y);
+		tex.render(ren, BBox->x, BBox->y);
 }
 
 // InputComponent PART
@@ -36,21 +36,21 @@ InputComponent::~InputComponent()
 	cout << "Stub!" << endl;
 }
 
-void InputComponent::MoveThisActor(SDL_Keycode sym, Uint32 *x, Uint32 *y)
+void InputComponent::MoveThisActor(SDL_Keycode sym, SDL_Rect *BBox)
 {
-	printf("New Pos: %d - %d\n", *x, *y);
+	printf("New Pos: %d - %d\n", BBox->x, BBox->y);
 	switch(sym) {
 	case SDLK_w:
-		*y -= 2;
+		BBox->y -= 2;
 		break;
 	case SDLK_s:
-		*y += 2;
+		BBox->y += 2;
 		break;
 	case SDLK_a:
-		*x -= 2;
+		BBox->x -= 2;
 		break;
 	case SDLK_d:
-		*x += 2;
+		BBox->x += 2;
 		break;
 	}
 }

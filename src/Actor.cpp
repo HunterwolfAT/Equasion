@@ -5,11 +5,14 @@ using namespace std;
 
 Actor::Actor(int x, int y, RenderComponent *ren, InputComponent *input)
 {
-	posx = x;
-	posy = y;
-
 	mrender = ren;
 	minput = input;
+
+	mBBox.x = x;
+	mBBox.y = y;
+	//TODO(max): Height and Width should not be static like here
+	mBBox.w = 220;
+	mBBox.h = 231;
 }
 
 bool Actor::hasRenderComponent()
@@ -24,21 +27,19 @@ RenderComponent* Actor::getRenderComponent()
 	return mrender;
 }
 
-void Actor::setPosX(int x)
+void Actor::setPos(int x, int y)
 {
-	posx = x;
-}
-
-void Actor::setPosY(int y)
-{
-	posy = y;
+	if (x >= 0)
+		mBBox.x = x;
+	if (y >= 0)
+		mBBox.y = y;
 }
 
 void Actor::render(SDL_Renderer* ren)
 {
 	if (mrender != NULL) 
 	{
-		mrender->render(ren, posx, posy );
+		mrender->render(ren, &mBBox );
 	}
 }
 
@@ -47,7 +48,7 @@ void Actor::passInput(SDL_Keycode sym)
 	if (minput != NULL)
 	{
 		//printf("Stub!\n");
-		minput->MoveThisActor(sym, &posx, &posy);
+		minput->MoveThisActor(sym, &mBBox);
 	}
 }
 
