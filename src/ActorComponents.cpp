@@ -39,18 +39,14 @@ InputComponent::~InputComponent()
 void InputComponent::MoveThisActor(SDL_Keycode sym, Uint32 *x, Uint32 *y)
 {
 	printf("New Pos: %d - %d\n", *x, *y);
-	switch(sym) {
-	case SDLK_w:
+
+	if ( sym == SDLK_w )
 		*y -= 2;
-		break;
-	case SDLK_s:
+	if ( sym == SDLK_s )
 		*y += 2;
-		break;
-	case SDLK_a:
+	if ( sym == SDLK_a )
 		*x -= 2;
-		break;
-	case SDLK_d:
+	if ( sym == SDLK_d )
 		*x += 2;
-		break;
-	}
+	
 }
