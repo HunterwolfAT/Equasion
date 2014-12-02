@@ -15,7 +15,7 @@ class RenderComponent
 		void InitPos(int* x, int* y);
 		void LoadTexture(SDL_Renderer* ren, std::string path);
 		LTexture getTexture();
-		void render(SDL_Renderer *ren, int x, int y);
+		void render(SDL_Renderer *ren, SDL_Rect *BBox);
 	
 	private:
 		LTexture tex;
@@ -26,7 +26,7 @@ class InputComponent
 	public: 
 		InputComponent();
 		~InputComponent();
-		void MoveThisActor(SDL_Keycode sym, Uint32 *x, Uint32 *y);
+		void MoveThisActor(SDL_Keycode sym, SDL_Rect *BBox);
 };
 
 #endif

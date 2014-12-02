@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <cmath>
+#include <list>
 
 #include "LTexture.h"
 #include "Actor.h"
@@ -15,7 +16,8 @@ using namespace std;
 SDL_Window *win = NULL;
 SDL_Renderer *ren = NULL;
 
-bool Editor = false;
+// Mode to edit the world
+bool EditorMode = true;
 
 int init()
 {
@@ -63,6 +65,9 @@ int main(int argc, const char *argv[])
 	Actor LittlePip(10, 10, &PipRender, &PipController);
 	Actor DontRender;	//Note(hunter): No parenthesis, or g++ will think DontRender is a function
 
+	list<Actor> actors;
+	actors.push_back(LittlePip);
+
 	cout << "LittlePip has PipRender: " << LittlePip.hasRenderComponent() << endl;
 	//cout << "DontRender has PipRender: " << DontRender.hasRenderComponent() << endl;
 
@@ -73,6 +78,10 @@ int main(int argc, const char *argv[])
 	// Event Handler
 	SDL_Event e;
 
+	// Mouse position variables
+	int mx, my;
+	Actor *ActorToDrag = NULL;
+
 	while( !quit )
 	{
 		// Handle events on queue
@@ -81,13 +90,34 @@ int main(int argc, const char *argv[])
 			// User requests quit
 			if ( e.type == SDL_QUIT )
 				quit = true;
-			if ( e.type == SDL_KEYDOWN ) {
+			if ( e.type == SDL_KEYDOWN ) 
+			{
 				LittlePip.passInput(e.key.keysym.sym);
 			}
 			if ( e.type == SDL_MOUSEMOTION ) {
-				int mx, my;
-				SDL_GetMouseState( &mx, &my );
-				printf("Mouse Position: %d, %d\n", mx, my );
+				SDL_GetMouseState( &mx, & my );
+				printf("MousePos -  x: %d y: %d\n", mx, my);
+				// Move the selected Actor
+				if (ActorToDrag != NULL) 
+				{
+					ActorToDrag->setPos(mx, my);
+					printf("Moving!\n");
+				}
+			}
+			if ( e.type == SDL_MOUSEBUTTONDOWN ) 
+			{
+				SDL_GetMouseState( &mx, & my );
+				list<Actor>::iterator i;
+				for ( i = actors.begin(); i != actors.end(); ++i)
+				{
+					SDL_Rect r = i->getRect();
+					if ( mx > r.x && mx < r.x + r.w && my > r.y && my < r.y + r.h)
+						ActorToDrag = &LittlePip;
+				}
+			}
+			if ( e.type == SDL_MOUSEBUTTONUP ) 
+			{
+				ActorToDrag = NULL;
 			}
 		}
 
