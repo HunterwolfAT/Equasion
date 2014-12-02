@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <cmath>
+#include <list>
 
 #include "LTexture.h"
 #include "Actor.h"
@@ -64,6 +65,9 @@ int main(int argc, const char *argv[])
 	Actor LittlePip(10, 10, &PipRender, &PipController);
 	Actor DontRender;	//Note(hunter): No parenthesis, or g++ will think DontRender is a function
 
+	list<Actor> actors;
+	actors.push_back(LittlePip);
+
 	cout << "LittlePip has PipRender: " << LittlePip.hasRenderComponent() << endl;
 	//cout << "DontRender has PipRender: " << DontRender.hasRenderComponent() << endl;
 
@@ -102,8 +106,14 @@ int main(int argc, const char *argv[])
 			}
 			if ( e.type == SDL_MOUSEBUTTONDOWN ) 
 			{
-				printf("Click!\n");
-				ActorToDrag = &LittlePip;
+				SDL_GetMouseState( &mx, & my );
+				list<Actor>::iterator i;
+				for ( i = actors.begin(); i != actors.end(); ++i)
+				{
+					SDL_Rect r = i->getRect();
+					if ( mx > r.x && mx < r.x + r.w && my > r.y && my < r.y + r.h)
+						ActorToDrag = &LittlePip;
+				}
 			}
 			if ( e.type == SDL_MOUSEBUTTONUP ) 
 			{

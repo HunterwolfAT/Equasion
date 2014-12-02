@@ -16,6 +16,7 @@ class Actor
 		RenderComponent* getRenderComponent();
 
 		void setPos(int x, int y);
+		SDL_Rect getRect();
 		
 
 	private:

@@ -35,6 +35,11 @@ void Actor::setPos(int x, int y)
 		mBBox.y = y;
 }
 
+SDL_Rect Actor::getRect() 
+{
+	return mBBox;
+}
+
 void Actor::render(SDL_Renderer* ren)
 {
 	if (mrender != NULL) 
