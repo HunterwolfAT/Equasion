@@ -28,7 +28,7 @@ int init()
 	}
 
 	// Fenster erzeugen
-	win = SDL_CreateWindow("Hello World!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
+	win = SDL_CreateWindow("Equasion", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
 		if (win == NULL){
 		std::cout << SDL_GetError() << std::endl;
 		return 1;
@@ -65,8 +65,8 @@ int main(int argc, const char *argv[])
 	Actor LittlePip(10, 10, &PipRender, &PipController);
 	Actor DontRender;	//Note(hunter): No parenthesis, or g++ will think DontRender is a function
 
-	list<Actor> actors;
-	actors.push_back(LittlePip);
+	list<Actor*> actors;
+	actors.push_back(&LittlePip);
 
 	cout << "LittlePip has PipRender: " << LittlePip.hasRenderComponent() << endl;
 	//cout << "DontRender has PipRender: " << DontRender.hasRenderComponent() << endl;
@@ -107,10 +107,11 @@ int main(int argc, const char *argv[])
 			if ( e.type == SDL_MOUSEBUTTONDOWN ) 
 			{
 				SDL_GetMouseState( &mx, & my );
-				list<Actor>::iterator i;
+				list<Actor*>::iterator i;
 				for ( i = actors.begin(); i != actors.end(); ++i)
 				{
-					SDL_Rect r = i->getRect();
+					SDL_Rect r = (*i)->getRect();
+					printf("PipPos: x: %d y: %d\n", r.x, r.y);
 					if ( mx > r.x && mx < r.x + r.w && my > r.y && my < r.y + r.h)
 						ActorToDrag = &LittlePip;
 				}
